@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: -7571935449181892139}
   - component: {fileID: 1601829525518323623}
   - component: {fileID: 5189602832077614786}
+  - component: {fileID: 367375107298702471}
+  - component: {fileID: 1342720147320088829}
   m_Layer: 7
   m_Name: 'Character '
   m_TagString: Player
@@ -29,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 7526139295960739416}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.414, y: -2.522, z: 0}
+  m_LocalPosition: {x: -3.54, y: -2.49, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -170,6 +172,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimplePlayerMovement
   moveSpeed: 5
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 72
+  startPos: {x: 0, y: 0, z: 0}
+--- !u!114 &367375107298702471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526139295960739416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 277302d415e4d440cb4df79f1b2e8b05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 100
+  currentHealth: 100
+  damagePerSecond: 20
+  recoverPerSecond: 10
+  healthFill: {fileID: 0}
+--- !u!114 &1342720147320088829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526139295960739416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe36c3f9b76c477f90f6d4dd3d5e57c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  moveSpeed: 5
