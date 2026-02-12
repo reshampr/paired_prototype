@@ -14,10 +14,13 @@ public class HUDController : MonoBehaviour
 
 
    private void Start()
-   {
-       var player = GameObject.FindGameObjectWithTag("Player");
-       if (player) playerHealth = player.GetComponent<PlayerHealth>();
-   }
+    {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player) playerHealth = player.GetComponent<PlayerHealth>();
+
+        if (timerText != null)
+            timerText.text = "Time Left : 1:00"; 
+    }
 
 
    private void Update()
@@ -31,13 +34,19 @@ public class HUDController : MonoBehaviour
 
 
    public void UpdateTimer(float secondsLeft)
-   {
-       if (timerText)
-       {
-           secondsLeft = Mathf.Max(0, secondsLeft);
-           timerText.text = "Time: " + Mathf.CeilToInt(secondsLeft).ToString();
-       }
-   }
+    {
+        if (timerText)
+        {
+            secondsLeft = Mathf.Max(0, secondsLeft);
+
+            int secs = Mathf.CeilToInt(secondsLeft);
+            int minutes = secs / 60;
+            int seconds = secs % 60;
+
+            timerText.text = $"Time Left : {minutes}:{seconds:00}";
+        }
+    }
+
 
 
    public void ShowGameOver()
