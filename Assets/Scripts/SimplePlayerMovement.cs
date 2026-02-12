@@ -60,7 +60,7 @@ public class SimplePlayerMovement : MonoBehaviour
         var hp = other.GetComponent<HiddenPlatform>();
         if (hp != null && !hp.IsVisible())
         {
-            Debug.Log("Touching hidden platform while hidden -> go to start");
+            // Debug.Log("Touching hidden platform while hidden -> go to start");
             GoToStart();
         }
     }
