@@ -6,6 +6,33 @@
     <title>Unity Web Player | paried_prototype</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #111; /* Dark background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      #unity-container {
+        width: 960px;
+        height: 600px;
+      }
+
+      #unity-canvas {
+        width: 960px !important;
+        height: 600px !important;
+        background: #222;
+      }
+
+      #unity-footer {
+        display: none; /* removes Unity footer */
+      }
+</style>
+
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -106,6 +133,8 @@
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
         canvas.style.width = "960px";
         canvas.style.height = "600px";
+        config.matchWebGLToCanvasSize = true;
+
       }
 
       document.querySelector("#unity-loading-bar").style.display = "block";
