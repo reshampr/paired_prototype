@@ -1,38 +1,48 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerController))]
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth = 100f;
-    public int lives = 3;
-    public float damagePerSecondWhenHidden = 15f;
-    public float healPerSecondWhenNormal = 10f;
 
-    PlayerController player;
+    public float damagePerSecond = 20f;
+    public float recoverPerSecond = 10f;
 
-    void Awake()
-    {
-        player = GetComponent<PlayerController>();
-        currentHealth = maxHealth;
-    }
+    public Image healthFill;   // ← only ONE declaration
 
     void Update()
     {
-        float delta = Time.deltaTime;
+        bool touchingHidden = false;
+        bool touchingReal = false;
 
-        bool isHidden =
-            gameObject.layer == LayerMask.NameToLayer("PlayerHidden");
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 0.1f);
 
-        if (isHidden)
+        foreach (Collider2D hit in hits)
         {
-            currentHealth -= damagePerSecondWhenHidden * delta;
-        }
-        else
-        {
-            currentHealth += healPerSecondWhenNormal * delta;
+            if (hit.gameObject.layer == LayerMask.NameToLayer("Hidden"))
+                touchingHidden = true;
+
+            if (hit.gameObject.layer == LayerMask.NameToLayer("Real"))
+                touchingReal = true;
         }
 
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        if (touchingHidden)
+        {
+            Debug.Log("Taking Damage : " + currentHealth);
+            currentHealth -= damagePerSecond * Time.deltaTime;
+        }
+        else if (touchingReal)
+        {
+            Debug.Log("Healing : " + currentHealth);
+            currentHealth += recoverPerSecond * Time.deltaTime;
+        }
+
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (healthFill != null)
+        {
+            healthFill.fillAmount = currentHealth / maxHealth;
+        }
     }
 }

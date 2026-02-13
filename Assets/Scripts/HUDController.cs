@@ -25,11 +25,11 @@ public class HUDController : MonoBehaviour
 
    private void Update()
    {
-       if (playerHealth != null && healthBar != null)
-       {
-           healthBar.value = playerHealth.currentHealth / playerHealth.maxHealth;
-           if (livesText) livesText.text = "Lives: " + playerHealth.lives;
-       }
+    //    if (playerHealth != null && healthBar != null)
+    //    {
+    //        healthBar.value = playerHealth.currentHealth / playerHealth.maxHealth;
+    //        if (livesText) livesText.text = "Lives: " + playerHealth.lives;
+    //    }
    }
 
 

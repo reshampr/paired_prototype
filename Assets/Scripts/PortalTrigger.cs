@@ -13,7 +13,7 @@ public class PortalTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trigger Enter with: " + other.name);
+        // Debug.Log("Trigger Enter with: " + other.name);
 
         if (other.CompareTag("HiddenPlatform"))
         {
