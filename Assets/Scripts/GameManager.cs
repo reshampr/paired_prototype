@@ -57,42 +57,23 @@ public class GameManager : MonoBehaviour
     public void LevelComplete()
     {
         isRunning = false;
-        StopPlayerMovement();
-        hud?.ShowLevelComplete();
+        // intentionally not updating HUD for victory - handled elsewhere if needed
         Debug.Log("Level Complete!");
-        //if completed successfully, ensure restart UI isn't shown
-        if (restartButton != null) restartButton.SetActive(false);
     }
 
-    public void GameOver(bool success)
+    bool gameEnded = false;
+
+    public void GameOver(bool playerDied)
     {
-        //make sure we only run once
-        if (!isRunning) return;
+        if (gameEnded) return;
+
+        gameEnded = true;
         isRunning = false;
 
+        Debug.Log("GameOver called. playerDied = " + playerDied);
+
         StopPlayerMovement();
-
-        if (success)
-        {
-            hud?.ShowVictory();
-            //no restart on success
-            if (restartButton != null) restartButton.SetActive(false);
-        }
-        else
-        {
-            hud?.ShowGameOver();
-
-            //show the restart button after an optional delay (so any "game over" animation/text can appear)
-            if (restartButton != null)
-            {
-                if (showRestartDelay <= 0f)
-                    restartButton.SetActive(true);
-                else
-                    StartCoroutine(ShowRestartAfterDelay(showRestartDelay));
-            }
-        }
-
-        Debug.Log("Game Over. Success: " + success);
+        hud?.ShowGameOver(playerDied);
     }
 
     IEnumerator ShowRestartAfterDelay(float t)
@@ -132,12 +113,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //called from UI Button or keyboard
+    // called from UI Button or keyboard
     public void RestartLevel()
     {
+        Debug.Log("[GameManager] RestartLevel called.");
+
+        // Make sure any timeScale freeze is lifted
+        Time.timeScale = 1f;
+
+        // Hide restart UI (if managed by GameManager)
         if (restartButton != null) restartButton.SetActive(false);
 
-        //reload scene
+        // Reload scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

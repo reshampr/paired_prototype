@@ -16,18 +16,36 @@ public class GoalTrigger : MonoBehaviour
         {
             triggered = true;
 
-            // Stop player movement
-            SimplePlayerMovement movement = other.GetComponent<SimplePlayerMovement>();
-            if (movement != null)
-                movement.enabled = false;
+            // Disable movement (try known movement scripts)
+            var simpleMove = other.GetComponent<SimplePlayerMovement>();
+            if (simpleMove != null) simpleMove.enabled = false;
 
+            var playerController = other.GetComponent<PlayerController>();
+            if (playerController != null) playerController.enabled = false;
+
+            // Stop physics motion
             Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
             if (rb != null)
+            {
                 rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+                // optionally: rb.simulated = false;
+            }
 
-            // Show UI
-            winText.SetActive(true);
-            nextLevelButton.SetActive(true);
+            // Tell the GameManager the level is complete (stops timer / shows HUD)
+            var gm = FindObjectOfType<GameManager>();
+            if (gm != null)
+            {
+                gm.LevelComplete();
+            }
+            else
+            {
+                Debug.LogWarning("[GoalTrigger] GameManager not found in scene.");
+            }
+
+            // Show local UI (if you still want these)
+            if (winText != null) winText.SetActive(true);
+            if (nextLevelButton != null) nextLevelButton.SetActive(true);
         }
     }
 
