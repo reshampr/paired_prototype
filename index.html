@@ -7,30 +7,32 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <style>
-      body {
+      html, body {
         margin: 0;
         padding: 0;
-        background: #111; /* Dark background */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+        height: 100%;
+        background: #fff; /* optional */
       }
 
-      #unity-container {
-        width: 960px;
-        height: 600px;
+      /* Adjust the Unity canvas element (id might be "unity-canvas" or "canvas") */
+      canvas, #unity-canvas, #canvas {
+        display: block;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100%;
+        max-height: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
       }
 
-      #unity-canvas {
-        width: 960px !important;
-        height: 600px !important;
-        background: #222;
+      /* If Unity uses a container div, also ensure it fills the window */
+      #unityContainer, .webgl-content {
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0;
+        padding: 0;
       }
 
-      #unity-footer {
-        display: none; /* removes Unity footer */
-      }
 </style>
 
   </head>
@@ -156,6 +158,18 @@
             };
 
       document.body.appendChild(script);
+    function fitCanvas() {
+      const canvas = document.getElementById('unity-canvas') || document.getElementById('canvas');
+      const container = document.getElementById('unityContainer') || document.getElementById('unity-canvas') || document.body;
+      if (!canvas) return;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      container.style.width = window.innerWidth + 'px';
+      container.style.height = window.innerHeight + 'px';
+    }
+    window.addEventListener('resize', fitCanvas);
+    window.addEventListener('load', fitCanvas);
+    setTimeout(fitCanvas, 500);
 
     </script>
   </body>
